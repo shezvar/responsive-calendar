@@ -22,7 +22,7 @@ import {
 } from 'date-fns'
 import { Event } from './types'
 
-export function getMonthDays(date: Date, events: Event[]) {
+export function getMonthDays(date: Date, events: Event[], selectedDate?: Date) {
     const monthStart = startOfMonth(date)
     const monthEnd = endOfMonth(date)
     const startDate = startOfWeek(monthStart, { weekStartsOn: 1 }) // Monday start
@@ -45,7 +45,7 @@ export function getMonthDays(date: Date, events: Event[]) {
             date: format(day, 'yyyy-MM-dd'),
             isCurrentMonth: isSameMonth(day, monthStart),
             isToday: isToday(day),
-            isSelected: isSameDay(day, date),
+            isSelected: isSameDay(day, selectedDate || date),
             events: dayEvents,
             originalDate: day,
         }
@@ -74,7 +74,7 @@ export function getYearMonths(date: Date, events: Event[]) {
     return months.map((month) => ({
         name: format(month, 'MMMM'),
         date: month,
-        days: getMonthDays(month, events),
+        days: getMonthDays(month, events, date),
     }))
 }
 

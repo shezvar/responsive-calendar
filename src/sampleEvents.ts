@@ -13,6 +13,7 @@ export const sampleEvents: Event[] = [
         datetime: new Date(year, month, day, 10, 0).toISOString(),
         endDatetime: new Date(year, month, day, 11, 0).toISOString(),
         href: '#',
+        creator: 'Segun Oroyo',
     },
     {
         id: '2',
@@ -21,6 +22,7 @@ export const sampleEvents: Event[] = [
         datetime: new Date(year, month, day, 14, 0).toISOString(),
         endDatetime: new Date(year, month, day, 15, 0).toISOString(),
         href: '#',
+        creator: 'Ademola Johnson',
     },
     {
         id: '3',
@@ -29,6 +31,7 @@ export const sampleEvents: Event[] = [
         datetime: new Date(year, month, day, 18, 0).toISOString(),
         endDatetime: new Date(year, month, day, 20, 0).toISOString(),
         href: '#',
+        creator: 'Segun Oroyo',
     },
     {
         id: '4',
@@ -37,6 +40,7 @@ export const sampleEvents: Event[] = [
         datetime: new Date(year, month, day + 2, 14, 0).toISOString(),
         endDatetime: new Date(year, month, day + 2, 17, 0).toISOString(),
         href: '#',
+        creator: 'Ademola Johnson',
     },
     {
         id: '5',
@@ -45,6 +49,7 @@ export const sampleEvents: Event[] = [
         datetime: new Date(year, month, day - 2, 15, 0).toISOString(),
         endDatetime: new Date(year, month, day - 2, 16, 30).toISOString(),
         href: '#',
+        creator: 'Segun Oroyo',
     },
     {
         id: '6',
@@ -53,5 +58,6 @@ export const sampleEvents: Event[] = [
         datetime: new Date(year, month, day - 2, 19, 0).toISOString(),
         endDatetime: new Date(year, month, day - 2, 22, 0).toISOString(),
         href: '#',
+        creator: 'Ademola Johnson',
     },
 ]

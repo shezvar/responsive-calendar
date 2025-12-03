@@ -88,7 +88,7 @@ export default function WeekView({ currentDate, events, onDateChange, onEventCli
                                 onClick={() => onDateChange(day)}
                                 className={clsx(
                                     'flex-1 text-center py-2 border-l border-stone-200 dark:border-white/5 hover:bg-stone-50 dark:hover:bg-white/5',
-                                    isSelected && 'bg-white dark:bg-blue-900'
+                                    isSelected && 'bg-white border-b-2 border-b-blue-600 dark:border-b-blue-500'
                                 )}
                             >
                                 <div className={clsx(
@@ -193,7 +193,7 @@ export default function WeekView({ currentDate, events, onDateChange, onEventCli
                                     >
                                         <div
                                             className={clsx(
-                                                'h-full rounded p-2 text-xs overflow-hidden',
+                                                'h-full rounded p-2 text-xs overflow-hidden gap-2',
                                                 colors.bg,
                                                 colors.hover,
                                                 colors.border,
@@ -201,7 +201,7 @@ export default function WeekView({ currentDate, events, onDateChange, onEventCli
                                             )}
                                         >
                                             <div className="font-semibold truncate">{event.name}</div>
-                                            <div className="text-xs opacity-75 truncate">{event.time}</div>
+                                            <span className="opacity-75">{event.creator || event.time}</span>
                                         </div>
                                     </div>
                                 )

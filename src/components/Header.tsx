@@ -13,9 +13,10 @@ interface HeaderProps {
     onToggleSidebar: () => void
     isSidebarOpen: boolean
     onCreateEvent: () => void
+    enableSidebar?: boolean
 }
 
-export default function Header({ currentDate, view, onViewChange, onDateChange, onToggleSidebar, isSidebarOpen, onCreateEvent }: HeaderProps) {
+export default function Header({ currentDate, view, onViewChange, onDateChange, onToggleSidebar, isSidebarOpen, onCreateEvent, enableSidebar = true }: HeaderProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -53,16 +54,18 @@ export default function Header({ currentDate, view, onViewChange, onDateChange, 
                 {/* Navigation */}
                 <div className="flex flex-col lg:flex-row">
                     <div className="flex items-center gap-2">
-                        <button
-                            onClick={onToggleSidebar}
-                            className="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-white transition-colors hidden lg:block"
-                            title={isSidebarOpen ? "Hide sidebar" : "Show sidebar"}
-                        >
-                            <ArrowLeftStartOnRectangleIcon className={clsx(
-                                "size-5 transition-transform duration-300",
-                                !isSidebarOpen && "rotate-180"
-                            )} />
-                        </button>
+                        {enableSidebar && (
+                            <button
+                                onClick={onToggleSidebar}
+                                className="p-1 text-stone-400 hover:text-stone-600 dark:hover:text-white transition-colors hidden lg:block"
+                                title={isSidebarOpen ? "Hide sidebar" : "Show sidebar"}
+                            >
+                                <ArrowLeftStartOnRectangleIcon className={clsx(
+                                    "size-5 transition-transform duration-300",
+                                    !isSidebarOpen && "rotate-180"
+                                )} />
+                            </button>
+                        )}
                         <button
                             onClick={() => onDateChange(new Date())}
                             className="px-3 py-1 text-sm font-medium rounded-md hover:bg-stone-100 text-stone-700 hover:text-stone-900 dark:text-stone-300 dark:hover:text-white"

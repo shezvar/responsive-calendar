@@ -52,7 +52,7 @@ function App() {
 | Prop | Type | Default | Description |
 |---|---|---|---|
 | `events` | `Event[]` | `[]` | Array of event objects to display. |
-| `initialView` | `'day' \| 'week' \| 'month' \| 'year'` | `'month'` | The initial view to render. |
+| `initialView` | `'day' \| 'week' \| 'month' \| 'year' \| 'scheduled'` | `'month'` | The initial view to render. |
 | `initialDate` | `Date` | `new Date()` | The initial date to display. |
 | `locale` | `Locale` | `undefined` | Date-fns locale object for internationalization. |
 | `className` | `string` | `undefined` | Class name for the root container. |
@@ -66,12 +66,13 @@ function App() {
 | `renderSidebar` | `(props: any) => React.ReactNode` | `undefined` | Render prop to replace the default sidebar. |
 | `isDateDisabled` | `(date: Date) => boolean` | `undefined` | Function to determine if a date should be disabled. |
 | `onSlotClick` | `(date: Date) => void` | `undefined` | Callback fired when an empty time slot is clicked. |
+| `enableSidebar` | `boolean` | `true` | Whether to show the sidebar and toggle button. |
 
 ## Advanced Features
 
 ### Click to Create
 
-By default, clicking on an empty time slot in the Day or Week view will open the "Create Event" drawer with the date and time pre-filled. You can override this behavior by providing an `onSlotClick` callback.
+By default, clicking on an empty time slot (or date cell in Month/Year view) will open the "Create Event" drawer with the date and time pre-filled. You can override this behavior by providing an `onSlotClick` callback.
 
 ```tsx
 <Calendar
@@ -159,6 +160,7 @@ interface Event {
   datetime: string // ISO string
   endDatetime?: string // ISO string
   href: string
+  creator?: string
 }
 ```
 

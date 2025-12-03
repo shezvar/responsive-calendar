@@ -2,7 +2,7 @@ import { ViewProps } from '../types'
 import { getMonthDays } from '../utils'
 import clsx from 'clsx'
 
-export default function MonthView({ currentDate, events, onDateChange, onViewChange, onEventClick, isDateDisabled }: ViewProps) {
+export default function MonthView({ currentDate, events, onEventClick, isDateDisabled, onSlotClick }: ViewProps) {
     const days = getMonthDays(currentDate, events)
 
     const getEventColorClasses = (eventName: string) => {
@@ -73,8 +73,7 @@ export default function MonthView({ currentDate, events, onDateChange, onViewCha
                         )}
                         onClick={() => {
                             if (isDateDisabled?.(new Date(day.date))) return
-                            onDateChange(day.originalDate)
-                            onViewChange('day')
+                            onSlotClick?.(day.originalDate)
                         }}
                     >
                         <time
@@ -101,14 +100,14 @@ export default function MonthView({ currentDate, events, onDateChange, onViewCha
                                             onEventClick(event)
                                         }}
                                         className={clsx(
-                                            'px-1.5 py-0.5 text-xs rounded-sm truncate cursor-pointer hover:opacity-80',
+                                            'flex items-center px-1.5 py-0.5 text-xs rounded-sm truncate cursor-pointer hover:opacity-80 gap-2',
                                             colors.bg,
                                             colors.text,
                                             colors.border
                                         )}
                                     >
                                         <span className="font-medium">{event.name}</span>
-                                        <span className="ml-1 opacity-75 hidden xl:inline">{event.time}</span>
+                                        <span className="opacity-75">{event.creator || event.time}</span>
                                     </div>
                                 )
                             })}
