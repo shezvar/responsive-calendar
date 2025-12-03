@@ -10,6 +10,7 @@ export interface Event {
     endDatetime?: string
     allDay?: boolean
     href: string
+    creator?: string
 }
 
 export interface CalendarClassNames {
@@ -30,6 +31,7 @@ export interface CalendarProps {
     locale?: Locale
     className?: string
     classNames?: CalendarClassNames
+    enableSidebar?: boolean
 
     // Callbacks
     onEventCreate?: (event: Omit<Event, 'id'>) => Promise<Event | void> | void

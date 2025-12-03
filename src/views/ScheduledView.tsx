@@ -79,8 +79,8 @@ export default function ScheduledView({ currentDate, events, onEventClick }: Vie
                                             </div>
 
                                             {/* Event Name */}
-                                            <div className="text-sm font-medium text-stone-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                                {event.name}
+                                            <div className="flex items-center text-sm font-medium text-stone-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors gap-4">
+                                                {event.name} <span className="font-normal text-stone-500 dark:text-stone-400">{event.creator}</span>
                                             </div>
                                         </div>
                                     ))}

@@ -2,7 +2,7 @@ import { ViewProps } from '../types'
 import { getYearMonths } from '../utils'
 import clsx from 'clsx'
 
-export default function YearView({ currentDate, events, onDateChange, onViewChange }: ViewProps) {
+export default function YearView({ currentDate, events, onSlotClick }: ViewProps) {
     const months = getYearMonths(currentDate, events)
 
     const getDayColorClasses = (dayEvents: any[]) => {
@@ -51,8 +51,7 @@ export default function YearView({ currentDate, events, onDateChange, onViewChan
                                         key={day.date}
                                         type="button"
                                         onClick={() => {
-                                            onDateChange(day.originalDate)
-                                            onViewChange('day')
+                                            onSlotClick?.(day.originalDate)
                                         }}
                                         className={clsx(
                                             day.isCurrentMonth ? "bg-white dark:bg-stone-900" : "bg-stone-50 dark:bg-stone-800",

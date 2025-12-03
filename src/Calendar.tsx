@@ -25,7 +25,8 @@ export default function Calendar({
     isDateDisabled,
     onSlotClick,
     renderHeader,
-    renderSidebar
+    renderSidebar,
+    enableSidebar = true
 }: CalendarProps) {
     const [currentView, setCurrentView] = useState<ViewType>(initialView)
     const [currentDate, setCurrentDate] = useState<Date>(initialDate || new Date())
@@ -146,18 +147,20 @@ export default function Calendar({
 
     return (
         <div className={clsx("flex h-full bg-white dark:bg-gray-900", className, classNames?.root)}>
-            <div
-                className={clsx(
-                    "h-full transition-all duration-300 ease-in-out",
-                    isSidebarOpen ? 'lg:w-64' : 'w-0',
-                    classNames?.sidebar
-                )}
-                style={{ overflow: 'hidden' }}
-            >
-                {renderSidebar ? renderSidebar({ currentDate, onDateChange: handleDateChange, events }) : (
-                    <Sidebar currentDate={currentDate} onDateChange={handleDateChange} events={events} />
-                )}
-            </div>
+            {enableSidebar && (
+                <div
+                    className={clsx(
+                        "h-full transition-all duration-300 ease-in-out",
+                        isSidebarOpen ? 'lg:w-64' : 'w-0',
+                        classNames?.sidebar
+                    )}
+                    style={{ overflow: 'hidden' }}
+                >
+                    {renderSidebar ? renderSidebar({ currentDate, onDateChange: handleDateChange, events }) : (
+                        <Sidebar currentDate={currentDate} onDateChange={handleDateChange} events={events} />
+                    )}
+                </div>
+            )}
             <div className={clsx("flex flex-1 flex-col overflow-hidden", classNames?.content)}>
                 {renderHeader ? renderHeader({
                     currentDate,
@@ -166,7 +169,8 @@ export default function Calendar({
                     onDateChange: handleDateChange,
                     onToggleSidebar: toggleSidebar,
                     isSidebarOpen,
-                    onCreateEvent: handleCreateEvent
+                    onCreateEvent: handleCreateEvent,
+                    enableSidebar
                 }) : (
                     <Header
                         currentDate={currentDate}
@@ -176,6 +180,7 @@ export default function Calendar({
                         onToggleSidebar={toggleSidebar}
                         isSidebarOpen={isSidebarOpen}
                         onCreateEvent={handleCreateEvent}
+                        enableSidebar={enableSidebar}
                     />
                 )}
                 <div className="flex-1 overflow-auto">

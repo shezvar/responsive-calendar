@@ -75,7 +75,7 @@ export default function DayView({ currentDate, events, onDateChange, onEventClic
                                 onClick={() => onDateChange(day)}
                                 className={clsx(
                                     'flex-1 text-center py-2 border-l border-stone-200 dark:border-white/5 hover:bg-stone-50 dark:hover:bg-white/5',
-                                    isSelected && 'bg-white dark:bg-blue-900'
+                                    isSelected && 'bg-white border-b-2 border-b-blue-600 dark:border-b-blue-500'
                                 )}
                             >
                                 <div className={clsx(
@@ -172,15 +172,15 @@ export default function DayView({ currentDate, events, onDateChange, onEventClic
                                     >
                                         <div
                                             className={clsx(
-                                                'h-full rounded p-2 text-xs overflow-hidden flex items-center',
+                                                'h-full rounded p-2 text-xs overflow-hidden flex items-center gap-2',
                                                 colors.bg,
                                                 colors.hover,
                                                 colors.border,
                                                 colors.text
                                             )}
                                         >
-                                            <span className="font-bold mr-2">{event.name}</span>
-                                            {/* <span className="opacity-75">{event.time}</span> */}
+                                            <span className="font-bold">{event.name}</span>
+                                            <span className="opacity-75">{event.creator || event.time}</span>
                                         </div>
                                     </div>
                                 )
