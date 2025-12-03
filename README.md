@@ -45,6 +45,8 @@ function App() {
     </div>
   )
 }
+
+<Calendar events={events} enableSidebar={false} />
 ```
 
 ## Props

@@ -32,7 +32,7 @@ export default function Sidebar({ currentDate, onDateChange, events }: SidebarPr
     }
 
     return (
-        <div className="hidden lg:flex lg:flex-col w-64 h-full border-r border-stone-200 bg-stone-50 dark:border-white/10 dark:bg-stone-800/50">
+        <div className="hidden lg:flex lg:flex-col w-64 h-full border-r border-stone-200 bg-stone-50 dark:border-white/10 dark:bg-stone-950">
             {/* Mini Calendar */}
             <div className="p-6">
                 <div className="flex items-center justify-between text-stone-900 dark:text-white mb-4">

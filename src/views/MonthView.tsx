@@ -66,7 +66,7 @@ export default function MonthView({ currentDate, events, onEventClick, isDateDis
                     <div
                         key={day.date}
                         className={clsx(
-                            'relative border-b border-r border-stone-100 dark:border-white/5 p-2 min-h-[100px]',
+                            'relative border-b border-r border-stone-100 dark:border-white/5 p-2 min-h-[100px] cursor-pointer hover:bg-stone-50 dark:hover:bg-stone-800/50 transition-colors',
                             !day.isCurrentMonth && 'bg-stone-50/50 dark:bg-stone-800/50 text-stone-400',
                             day.isCurrentMonth && 'bg-white dark:bg-stone-900',
                             isDateDisabled?.(new Date(day.date)) && 'bg-stone-100 dark:bg-stone-800/50 cursor-not-allowed opacity-75'
