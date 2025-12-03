@@ -13,7 +13,7 @@ import clsx from 'clsx'
 
 export default function Calendar({
     events = [],
-    initialView = 'month',
+    initialView = 'week',
     initialDate,
     className,
     classNames,

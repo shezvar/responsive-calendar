@@ -88,7 +88,7 @@ export default function WeekView({ currentDate, events, onDateChange, onEventCli
                                 onClick={() => onDateChange(day)}
                                 className={clsx(
                                     'flex-1 text-center py-2 border-l border-stone-200 dark:border-white/5 hover:bg-stone-50 dark:hover:bg-white/5',
-                                    isSelected && 'bg-white border-b-2 border-b-blue-600 dark:border-b-blue-500'
+                                    isSelected && 'bg-white border-b-2 border-b-blue-600 dark:bg-stone-900 dark:border-b-blue-500'
                                 )}
                             >
                                 <div className={clsx(
@@ -96,7 +96,7 @@ export default function WeekView({ currentDate, events, onDateChange, onEventCli
                                     isToday
                                         ? 'text-blue-700'
                                         : 'text-blue-700 dark:text-white',
-                                    isSelected && isToday && 'font-bold'
+                                    isSelected && isToday && 'font-bold dark:text-blue-500'
                                 )}>
                                     {format(day, 'EEE')}
                                 </div>
@@ -106,10 +106,10 @@ export default function WeekView({ currentDate, events, onDateChange, onEventCli
                                         isToday
                                             ? 'text-blue-600'
                                             : 'text-stone-900 dark:text-white',
-                                        isSelected && isToday && 'font-bold'
+                                        isSelected && isToday && 'font-bold dark:text-blue-500'
                                     )}
                                 >
-                                    {format(day, 'd')}
+                                    {format(day, 'dd')}
                                 </div>
                             </button>
                         )

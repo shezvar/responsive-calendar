@@ -49,7 +49,7 @@ export default function Header({ currentDate, view, onViewChange, onDateChange, 
     }, [])
 
     return (
-        <header className="flex items-center justify-between border-b border-stone-200 px-6 py-3 dark:border-white/10">
+        <header className="flex bg-white items-center justify-between border-b border-stone-200 px-3 py-2 dark:bg-stone-900 dark:border-white/10">
             <div className='flex items-center gap-4'>
                 {/* Navigation */}
                 <div className="flex flex-col lg:flex-row">
@@ -68,24 +68,26 @@ export default function Header({ currentDate, view, onViewChange, onDateChange, 
                         )}
                         <button
                             onClick={() => onDateChange(new Date())}
-                            className="px-3 py-1 text-sm font-medium rounded-md hover:bg-stone-100 text-stone-700 hover:text-stone-900 dark:text-stone-300 dark:hover:text-white"
+                            className="px-3 py-1 text-sm font-medium rounded-md hover:bg-stone-100 text-stone-700 hover:text-stone-900 dark:hover:bg-stone-800 dark:text-stone-300 dark:hover:text-white"
                         >
                             Today
                         </button>
-                        <button
-                            onClick={() => navigate('previous')}
-                            className="p-1 text-stone-400 rounded-md hover:bg-stone-100 hover:text-stone-600 dark:hover:text-white"
-                            aria-label="Previous period"
-                        >
-                            <ChevronLeftIcon className="size-5" />
-                        </button>
-                        <button
-                            onClick={() => navigate('next')}
-                            className="p-1 text-stone-400 rounded-md hover:bg-stone-100 hover:text-stone-600 dark:hover:text-white"
-                            aria-label="Next period"
-                        >
-                            <ChevronRightIcon className="size-5" />
-                        </button>
+                        <div className="flex items-center">
+                            <button
+                                onClick={() => navigate('previous')}
+                                className="p-1 text-stone-400 rounded-md hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-600 dark:hover:text-white"
+                                aria-label="Previous period"
+                            >
+                                <ChevronLeftIcon className="size-5" />
+                            </button>
+                            <button
+                                onClick={() => navigate('next')}
+                                className="p-1 text-stone-400 rounded-md hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-600 dark:hover:text-white"
+                                aria-label="Next period"
+                            >
+                                <ChevronRightIcon className="size-5" />
+                            </button>
+                        </div>
                     </div>
                     <div className="lg:block">
                         <h1 className="px-3 py-1 text-sm font-medium text-stone-700 hover:text-stone-900 dark:text-stone-300 dark:hover:text-white">

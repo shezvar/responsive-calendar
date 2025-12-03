@@ -1,4 +1,4 @@
-import { format, isSameDay, isAfter, startOfDay, differenceInMinutes } from 'date-fns'
+import { format, isSameDay, isAfter, startOfDay } from 'date-fns'
 import { ViewProps, Event } from '../types'
 import clsx from 'clsx'
 
@@ -36,15 +36,6 @@ export default function ScheduledView({ currentDate, events, onEventClick }: Vie
         return 'bg-blue-500'
     }
 
-    const getDurationString = (start: Date, end: Date) => {
-        const minutes = differenceInMinutes(end, start)
-        if (minutes < 60) return `${minutes} min`
-        const hours = Math.floor(minutes / 60)
-        const remainingMinutes = minutes % 60
-        if (remainingMinutes === 0) return `${hours} hr`
-        return `${hours} hr ${remainingMinutes} min`
-    }
-
     return (
         <div className="flex flex-col h-full bg-white dark:bg-stone-900 overflow-auto">
             {dates.length === 0 ? (
@@ -58,42 +49,48 @@ export default function ScheduledView({ currentDate, events, onEventClick }: Vie
                         const dayEvents = groupedEvents[dateStr]
 
                         return (
-                            <div key={dateStr} className="flex flex-col py-4 px-6 hover:bg-stone-50 dark:hover:bg-white/5 transition-colors">
+                            <div key={dateStr} className="flex flex-row py-4 px-6 hover:bg-stone-50 dark:hover:bg-white/5 transition-colors">
                                 {/* Date Column */}
-                                <div className="mb-3">
-                                    <div className="text-sm text-stone-900 dark:text-white">
-                                        {format(date, 'd')} <span className="text-stone-500 dark:text-stone-400">{format(date, 'MMM, EEE')}</span>
+                                <div className="w-32 flex-none pt-1">
+                                    <div className="text-sm font-bold text-stone-900 dark:text-white uppercase">
+                                        {format(date, 'd')} <span className="text-stone-500 dark:text-stone-400 font-normal">{format(date, 'MMM, EEE')}</span>
                                     </div>
                                 </div>
 
                                 {/* Events Column */}
-                                <div className="space-y-3">
+                                <div className="flex-1 space-y-3">
                                     {dayEvents.map(event => (
                                         <div
                                             key={event.id}
                                             className="group flex items-center gap-4 cursor-pointer"
                                             onClick={() => onEventClick(event)}
                                         >
+                                            {/* Dot Indicator */}
+                                            <div className={clsx("w-2.5 h-2.5 rounded-full flex-none", getEventColorClasses(event.name))} />
 
-                                            <div className="flex items-center flex-row">
-                                                <div className="flex flex-col w-24 flex-none">
-                                                    <div className="text-xs text-stone-900 dark:text-white font-medium">
-                                                        {event.allDay ? 'All day' : format(new Date(event.datetime), 'h:mm a')}
-                                                    </div>
-                                                    {!event.allDay && event.endDatetime && (
-                                                        <div className="text-xs text-stone-500 dark:text-stone-400">
-                                                            {getDurationString(new Date(event.datetime), new Date(event.endDatetime))}
-                                                        </div>
-                                                    )}
-                                                </div>
+                                            {/* Time */}
+                                            <div className="hidden w-32 flex-none text-sm text-stone-500 dark:text-stone-400">
+                                                {event.allDay ? 'All day' : (
+                                                    <>
+                                                        {format(new Date(event.datetime), 'h:mm')}
+                                                        {event.endDatetime && ` – ${format(new Date(event.endDatetime), 'h:mm a')}`}
+                                                    </>
+                                                )}
+                                            </div>
 
-                                                {/* Dot Indicator */}
-                                                <div className={clsx("w-1 h-8 rounded-full mr-2", getEventColorClasses(event.name))} />
+                                            <div>
+                                                <div className="text-sm font-medium text-stone-900 dark:text-white">{event.name}</div>
+                                                <div className="text-xs text-stone-500 dark:text-stone-400">{event.allDay ? 'All day' : (
+                                                    <>
+                                                        {format(new Date(event.datetime), 'h:mm')}
+                                                        {event.endDatetime && ` – ${format(new Date(event.endDatetime), 'h:mm a')}`}
+                                                    </>
+                                                )}</div>
+                                            </div>
 
-                                                <div>
-                                                    <div className="text-sm font-medium text-stone-900 lg:group-hover:text-blue-600 dark:text-white">{event.name}</div>
-                                                    <div className="text-xs text-stone-500 dark:text-stone-400">{event.creator}</div>
-                                                </div>
+                                            {/* Event Name */}
+                                            <div className="hidden flex flex-wrap items-center text-sm text-stone-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                <span className="font-medium whitespace-nowrap pr-2">{event.name}</span> <span className="font-normal text-stone-500 dark:text-stone-400 whitespace-nowrap">{event.creator}</span>
                                             </div>
                                         </div>
                                     ))}

@@ -11,6 +11,7 @@ export interface Event {
     allDay?: boolean
     href: string
     creator?: string
+    description?: string
 }
 
 export interface CalendarClassNames {
