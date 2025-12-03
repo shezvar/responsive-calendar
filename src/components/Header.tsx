@@ -99,15 +99,7 @@ export default function Header({ currentDate, view, onViewChange, onDateChange, 
                         {/* {view === 'day' && <p className="text-sm text-stone-500 dark:text-stone-400">GMT+1</p>} */}
                     </div>
                 </div>
-                <div className="hidden">
-                    <h1 className="px-3 py-1 text-sm font-medium text-stone-700 hover:text-stone-900 dark:text-stone-300 dark:hover:text-white">
-                        {getTitle()}
-                        {(view === 'day' || view === 'week') && (
-                            <span className="ml-2 text-sm font-normal text-stone-500">(Week {format(currentDate, 'w')})</span>
-                        )}
-                    </h1>
-                    {/* {view === 'day' && <p className="text-sm text-stone-500 dark:text-stone-400">GMT+1</p>} */}
-                </div>
+
             </div>
 
             <div className="flex items-center gap-4">

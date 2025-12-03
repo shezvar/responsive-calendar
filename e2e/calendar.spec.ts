@@ -5,29 +5,31 @@ test.describe('Calendar Plugin', () => {
         await page.goto('/');
     });
 
-    test('should load the calendar with default month view', async ({ page }) => {
-        // Check for current month/year in header (e.g., "December 2025" based on mock date or current date)
-        // Since the app uses current date by default, we might see current month.
-        // Let's check for the "Month view" text which indicates the current view.
-        await expect(page.getByText('Month view')).toBeVisible();
+    test('should load the calendar with default week view', async ({ page }) => {
+        // Check for "Week view" text which indicates the current view.
+        await expect(page.getByText('Week view')).toBeVisible();
 
         // Check for days of the week
         await expect(page.getByText('Mon', { exact: true })).toBeVisible();
         await expect(page.getByText('Sun', { exact: true })).toBeVisible();
+
+        // Check for week specific element (e.g., time labels like "12 AM")
+        await expect(page.getByText('12 AM')).toBeVisible();
     });
 
     test('should switch views', async ({ page }) => {
         // Open view switcher
-        await page.getByText('Month view').click();
+        await page.getByText('Week view').click();
 
-        // Select Week view
-        await page.getByRole('button', { name: 'week view' }).click();
+        // Select Month view
+        await page.getByRole('button', { name: 'month view' }).click();
 
         // Check if view changed
-        await expect(page.getByText('Week view')).toBeVisible();
+        await expect(page.getByText('Month view')).toBeVisible();
 
-        // Check for week specific element (e.g., time labels like "12 AM")
-        await expect(page.getByText('12 AM')).toBeVisible();
+        // Check for month specific element (e.g., grid cells)
+        // We can check that time labels are NOT visible
+        await expect(page.getByText('12 AM')).not.toBeVisible();
     });
 
     test('should navigate dates', async ({ page }) => {
