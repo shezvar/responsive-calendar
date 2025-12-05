@@ -24,9 +24,11 @@ export default function Calendar({
     onViewChange,
     isDateDisabled,
     onSlotClick,
+    onEventClick,
     renderHeader,
     renderSidebar,
-    enableSidebar = true
+    enableSidebar = true,
+    disableCreateEvent = false
 }: CalendarProps) {
     const [currentView, setCurrentView] = useState<ViewType>(initialView)
     const [currentDate, setCurrentDate] = useState<Date>(initialDate || new Date())
@@ -71,7 +73,7 @@ export default function Calendar({
     const handleSlotClick = (date: Date) => {
         if (onSlotClick) {
             onSlotClick(date)
-        } else {
+        } else if (!disableCreateEvent) {
             // Default behavior: open create drawer
             setCreateEventInitialDate(date)
             // Format time as "HH:mm AM/PM"
@@ -87,8 +89,12 @@ export default function Calendar({
     }
 
     const handleEventClick = (event: Event) => {
-        setSelectedEvent(event)
-        setIsViewDrawerOpen(true)
+        if (onEventClick) {
+            onEventClick(event)
+        } else {
+            setSelectedEvent(event)
+            setIsViewDrawerOpen(true)
+        }
     }
 
     const handleCloseCreateDrawer = () => {
@@ -170,7 +176,8 @@ export default function Calendar({
                     onToggleSidebar: toggleSidebar,
                     isSidebarOpen,
                     onCreateEvent: handleCreateEvent,
-                    enableSidebar
+                    enableSidebar,
+                    disableCreateEvent
                 }) : (
                     <Header
                         currentDate={currentDate}
@@ -181,6 +188,7 @@ export default function Calendar({
                         isSidebarOpen={isSidebarOpen}
                         onCreateEvent={handleCreateEvent}
                         enableSidebar={enableSidebar}
+                        disableCreateEvent={disableCreateEvent}
                     />
                 )}
                 <div className="flex-1 overflow-auto">

@@ -33,6 +33,7 @@ export interface CalendarProps {
     className?: string
     classNames?: CalendarClassNames
     enableSidebar?: boolean
+    disableCreateEvent?: boolean
 
     // Callbacks
     onEventCreate?: (event: Omit<Event, 'id'>) => Promise<Event | void> | void
@@ -40,6 +41,7 @@ export interface CalendarProps {
     onEventDelete?: (eventId: string | number) => Promise<void> | void
     onDateChange?: (date: Date) => void
     onViewChange?: (view: ViewType) => void
+    onEventClick?: (event: Event) => void
 
     // New Props
     isDateDisabled?: (date: Date) => boolean

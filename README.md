@@ -1,175 +1,159 @@
 # React Calendar Plugin
 
-A reusable and customizable calendar component for React applications, built with Tailwind CSS and date-fns.
+A flexible, reusable, and customizable calendar component for React applications. Built with **Tailwind CSS** and **date-fns**, it offers multiple views, drag-and-drop support (coming soon), and seamless integration into modern React projects.
 
 ## Features
 
-- **Multiple Views**: Month, Week, Day, and Year views.
-- **Dynamic Navigation**: Navigate between dates and views seamlessly.
-- **Event Rendering**: Display events on the calendar with support for time ranges.
-- **Responsive Design**: Optimized for various screen sizes.
-- **Dark Mode Support**: Built-in dark mode styles.
+- **Multiple Views**: Switch between Day, Week, Month, and Year views.
+- **Responsive**: Fully responsive design that works on desktop and mobile.
+- **Dark Mode**: Native dark mode support.
+- **Isolated Styles**: Styles are scoped to prevent conflicts with your application's CSS.
+- **Customizable**: extensive props for styling, behavior, and component replacement.
+- **React 18 & 19 Support**: Compatible with the latest React versions.
 
 ## Installation
 
-This plugin is designed to be integrated into your React project. Ensure you have the necessary dependencies installed:
-
 ```bash
-npm install date-fns @heroicons/react @headlessui/react clsx
+npm install react-calendar-plugin date-fns @heroicons/react @headlessui/react clsx react react-dom
 ```
 
-## Usage
+## Quick Start
 
-Import the `Calendar` component and use it in your application:
+### 1. Import Styles
+Import the CSS file once in your application (e.g., in `main.tsx` or `App.tsx`).
 
 ```tsx
-import { Calendar } from './path/to/calendar'
-import { Event } from './path/to/calendar/types'
+import 'react-calendar-plugin/dist/style.css'
+```
 
-const events: Event[] = [
-  {
-    id: '1',
-    name: 'Meeting',
-    time: '10:00 AM',
-    datetime: '2023-10-25T10:00:00',
-    endDatetime: '2023-10-25T11:00:00',
-    href: '#',
-  },
-  // ... more events
-]
+### 2. Render Calendar
+Import and use the `Calendar` component.
+
+```tsx
+import { Calendar } from 'react-calendar-plugin'
 
 function App() {
   return (
-    <div className="h-screen">
-      <Calendar events={events} initialView="month" />
+    <div className="h-screen p-4">
+      <Calendar />
     </div>
   )
 }
-
-<Calendar events={events} enableSidebar={false} />
 ```
 
-## Props
+## Use Cases
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `events` | `Event[]` | `[]` | Array of event objects to display. |
-| `initialView` | `'day' \| 'week' \| 'month' \| 'year' \| 'scheduled'` | `'month'` | The initial view to render. |
-| `initialDate` | `Date` | `new Date()` | The initial date to display. |
-| `locale` | `Locale` | `undefined` | Date-fns locale object for internationalization. |
-| `className` | `string` | `undefined` | Class name for the root container. |
-| `classNames` | `CalendarClassNames` | `undefined` | Object containing class names for specific parts of the calendar. |
-| `onEventCreate` | `(event: Omit<Event, 'id'>) => void` | `undefined` | Callback fired when a new event is created. |
-| `onEventUpdate` | `(event: Event) => void` | `undefined` | Callback fired when an event is updated. |
-| `onEventDelete` | `(eventId: string \| number) => void` | `undefined` | Callback fired when an event is deleted. |
-| `onDateChange` | `(date: Date) => void` | `undefined` | Callback fired when the selected date changes. |
-| `onViewChange` | `(view: ViewType) => void` | `undefined` | Callback fired when the view changes. |
-| `renderHeader` | `(props: any) => React.ReactNode` | `undefined` | Render prop to replace the default header. |
-| `renderSidebar` | `(props: any) => React.ReactNode` | `undefined` | Render prop to replace the default sidebar. |
-| `isDateDisabled` | `(date: Date) => boolean` | `undefined` | Function to determine if a date should be disabled. |
-| `onSlotClick` | `(date: Date) => void` | `undefined` | Callback fired when an empty time slot is clicked. |
-| `enableSidebar` | `boolean` | `true` | Whether to show the sidebar and toggle button. |
+### Basic Event Display
+Pass an array of events to display them on the calendar.
 
-## Advanced Features
+```tsx
+const events = [
+  {
+    id: 1,
+    name: 'Team Meeting',
+    time: '10:00 AM',
+    datetime: '2023-11-20T10:00:00',
+    href: '#'
+  }
+]
 
-### Click to Create
+<Calendar events={events} />
+```
 
-By default, clicking on an empty time slot (or date cell in Month/Year view) will open the "Create Event" drawer with the date and time pre-filled. You can override this behavior by providing an `onSlotClick` callback.
+### Read-Only / Display Only
+Use the `disableCreateEvent` prop to hide the "+" button and prevent users from creating new events by clicking on slots. This is perfect for dashboards where users can view but not edit schedules.
+
+```tsx
+<Calendar 
+  events={events}
+  disableCreateEvent={true}
+  isDateDisabled={(date) => date.getDay() === 0} // Disable Sundays
+/>
+```
+
+### Custom Event Handling
+Hooks for all major interactions allow you to sync with your backend.
 
 ```tsx
 <Calendar
-  onSlotClick={(date) => {
-    console.log('Clicked slot:', date);
-    // Open your own modal or navigate to a create page
+  onEventCreate={async (newEvent) => {
+    // API call to save event
+    await saveEvent(newEvent)
+  }}
+  onEventUpdate={(event) => console.log('Update:', event)}
+  onEventDelete={(id) => console.log('Delete:', id)}
+  onSlotClick={(date) => console.log('Clicked empty slot at:', date)}
+  onEventClick={(event) => {
+    // Custom navigation example
+    window.location.href = `/tasks/${event.id}`
   }}
 />
 ```
 
-### Disabling Dates
-
-You can disable specific dates or date ranges using the `isDateDisabled` prop. Disabled dates will be visually indicated and non-interactive.
-
-```tsx
-<Calendar
-  // Disable weekends
-  isDateDisabled={(date) => {
-    const day = date.getDay();
-    return day === 0 || day === 6;
-  }}
-/>
-```
-
-## Customization
-
-### Styling
-
-You can customize the appearance of the calendar using the `className` and `classNames` props.
+### Layout Customization
+You can toggle the sidebar or replace the entire header with your own component.
 
 ```tsx
 <Calendar
-  className="bg-gray-50 h-full"
-  classNames={{
-    sidebar: 'bg-white border-r border-gray-200',
-    header: 'bg-white border-b border-gray-200',
-    content: 'p-4',
-  }}
-/>
-```
-
-### Component Replacement
-
-For complete control, you can replace the header and sidebar using render props.
-
-```tsx
-<Calendar
-  renderHeader={({ currentDate, view, onViewChange }) => (
-    <div className="my-custom-header">
-      <h1>{format(currentDate, 'MMMM yyyy')}</h1>
-      {/* ... custom controls */}
+  enableSidebar={false} // Hide the sidebar
+  renderHeader={({ currentDate, onViewChange }) => (
+    <div className="flex justify-between p-4">
+      <h2>{currentDate.toDateString()}</h2>
+      <button onClick={() => onViewChange('week')}>Week View</button>
     </div>
   )}
 />
 ```
 
-## Event Management
+## API Reference
 
-The calendar provides callbacks for managing events, allowing you to integrate with your backend or state management system.
+### Props
 
-```tsx
-<Calendar
-  onEventCreate={async (newEvent) => {
-    const createdEvent = await api.createEvent(newEvent);
-    setEvents([...events, createdEvent]);
-  }}
-  onEventUpdate={async (updatedEvent) => {
-    await api.updateEvent(updatedEvent);
-    setEvents(events.map(e => e.id === updatedEvent.id ? updatedEvent : e));
-  }}
-  onEventDelete={async (eventId) => {
-    await api.deleteEvent(eventId);
-    setEvents(events.filter(e => e.id !== eventId));
-  }}
-/>
-```
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `events` | `Event[]` | `[]` | List of events to display. |
+| `initialView` | `'day' \| 'week' \| 'month' \| 'year'` | `'month'` | The view to show initially. |
+| `initialDate` | `Date` | `new Date()` | The date to show initially. |
+| `disableCreateEvent` | `boolean` | `false` | **New!** Disables all event creation UI (drawer & buttons). |
+| `enableSidebar` | `boolean` | `true` | Shows/hides the left sidebar. |
+| `onEventCreate` | `(event) => void` | - | Fn called when saving a new event. |
+| `onEventUpdate` | `(event) => void` | - | Fn called when updating an event. |
+| `onEventDelete` | `(id) => void` | - | Fn called when deleting an event. |
+| `onSlotClick` | `(date) => void` | - | Fn called when clicking an empty time slot. |
+| `onEventClick` | `(event) => void` | - | Fn called when clicking an existing event. Overrides default drawer. |
+| `isDateDisabled` | `(date) => boolean` | - | Fn to disable specific dates (visual & interactive). |
+| `className` | `string` | - | Classes for the root container. |
+| `classNames` | `object` | - | Classes for specific sub-components (`header`, `sidebar`, `content`). |
 
-## Event Object
+### Event Object Structure
 
 ```typescript
 interface Event {
-  id: string | number
-  name: string
-  time: string
-  datetime: string // ISO string
-  endDatetime?: string // ISO string
-  href: string
-  creator?: string
+    id: string | number
+    name: string
+    time: string
+    datetime: string // ISO 8601 string
+    endDatetime?: string // ISO 8601 string
+    description?: string
+    href?: string
 }
 ```
 
-## Demo
+## Styling & Tailwind
 
-To run the demo application included in this repository:
+This plugin uses **isolated styles**. The CSS included in `dist/style.css` is scoped (via Tailwind configuration) so it **does not** reset your application's global styles (Preflight is disabled).
 
-1.  Install dependencies: `npm install`
-2.  Start the development server: `npm run dev`
-3.  Open your browser to the local server URL (usually `http://localhost:5173`).
+If you want to override styles deeply using your own Tailwind config, you can include the plugin source in your `content` array, but standard CSS overrides usually suffice.
+
+## Troubleshooting
+
+### "Module not found: ... style.css"
+Ensure you are importing the CSS from the correct path:
+`import 'react-calendar-plugin/dist/style.css'`
+
+### React 19 Support
+This package declares `peerDependencies` for both React 18 and 19. You should not see dependency warnings during install.
+
+## License
+
+MIT

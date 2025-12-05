@@ -14,9 +14,10 @@ interface HeaderProps {
     isSidebarOpen: boolean
     onCreateEvent: () => void
     enableSidebar?: boolean
+    disableCreateEvent?: boolean
 }
 
-export default function Header({ currentDate, view, onViewChange, onDateChange, onToggleSidebar, isSidebarOpen, onCreateEvent, enableSidebar = true }: HeaderProps) {
+export default function Header({ currentDate, view, onViewChange, onDateChange, onToggleSidebar, isSidebarOpen, onCreateEvent, enableSidebar = true, disableCreateEvent = false }: HeaderProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -140,14 +141,16 @@ export default function Header({ currentDate, view, onViewChange, onDateChange, 
                     <button className="p-2 text-stone-400 hover:text-stone-600 hidden">
                         <MagnifyingGlassIcon className="h-5 w-5" />
                     </button>
-                    <button
-                        type="button"
-                        onClick={onCreateEvent}
-                        className="rounded-full bg-blue-600 p-1 text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-500 dark:shadow-none dark:hover:bg-blue-400 dark:focus-visible:outline-blue-500"
-                        aria-label="Create event"
-                    >
-                        <PlusIcon aria-hidden="true" className="size-5" />
-                    </button>
+                    {!disableCreateEvent && (
+                        <button
+                            type="button"
+                            onClick={onCreateEvent}
+                            className="rounded-full bg-blue-600 p-1 text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-500 dark:shadow-none dark:hover:bg-blue-400 dark:focus-visible:outline-blue-500"
+                            aria-label="Create event"
+                        >
+                            <PlusIcon aria-hidden="true" className="size-5" />
+                        </button>
+                    )}
                 </div>
             </div>
         </header>
