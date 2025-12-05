@@ -1,3 +1,4 @@
+import './index.css'
 export { default as Calendar } from './Calendar'
 export * from './types'
 export { default as MonthView } from './views/MonthView'
