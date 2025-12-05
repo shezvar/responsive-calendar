@@ -2,9 +2,30 @@
   "name": "react-calendar-plugin",
   "version": "0.0.1",
   "description": "A flexible React calendar plugin",
+  "author": "Segun Oroyo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shezvar/responsive-calendar.git"
+  },
+  "keywords": [
+    "react",
+    "calendar",
+    "component",
+    "tailwind",
+    "date-fns"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "files": [
     "dist"
   ],
